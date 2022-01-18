@@ -1,3 +1,5 @@
 {
-    "values": ["timer:load"]
+    "values": [
+        "clearlag:load"
+    ]
 }
