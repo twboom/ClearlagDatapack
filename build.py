@@ -6,7 +6,9 @@ from distutils.dir_util import copy_tree
 import json
 
 # Configuration
-config = {}
+config = {
+    'output': 'build'
+}
 
 def read_config():
     with open('datapack.config', 'r') as f:
@@ -41,16 +43,18 @@ def build():
     for format in config['pack_format']:
         make_version(format)
     shutil.rmtree('dptemp')
-    
+  
 
 def move_to_output(file):
     if os.path.exists(f'{config["output"]}\{file}'):
         os.remove(f'{config["output"]}\{file}')
     shutil.move(f'dpetemp\{file}', config["output"])
 
+
 def ready_output():
     if not os.path.exists(config["output"]):
         os.mkdir(config['output'])
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Build a new release.')
@@ -63,6 +67,7 @@ def parse_args():
     else:
         config["output"] = args.output
 
+
 def main():
     read_config()
     print(f'Starting build of {config["name"]} version {config["version"]}...')
@@ -72,6 +77,7 @@ def main():
     build()
     time_end = time.time()
     print(f'Finished build in {time_end - time_start}!')
+
 
 if __name__ == "__main__":
     main()
